@@ -1,19 +1,19 @@
 import { tap } from 'rxjs/operators'
 
-import { numbersStream } from '../../state/numbers'
-import { updateNumbersWarning } from '../../state/numbersWarning'
-import { createUseCase } from '../../utils/architecture/createUseCase'
+import { createUseCase } from '../../architecture'
+import { numbers$ } from '../../state/numbers'
+import { updateNumbersWarning } from '../../state/numbers-warning'
 
 
 interface SideEffects {
-  numbersStream: typeof numbersStream
+  numbers$: typeof numbers$
   updateNumbersWarning: typeof updateNumbersWarning
 }
 
-const name = 'numbers/showWarning'
+const name = 'use-case.numbers.show-warning'
 export const { useCase: showNumbersWarningUseCase } = createUseCase<SideEffects>(name,
   (intents, se) =>
-    numbersStream
+    se.numbers$
       .pipe(
         tap(numbers =>
           numbers.length === 0
@@ -22,5 +22,5 @@ export const { useCase: showNumbersWarningUseCase } = createUseCase<SideEffects>
               ? se.updateNumbersWarning(name, `Isn't that too much?`)
               : se.updateNumbersWarning(name, 'Good boy!')
         )
-      )
+      ),
 )

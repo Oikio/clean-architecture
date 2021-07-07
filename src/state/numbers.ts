@@ -1,10 +1,14 @@
-import { createState } from '../utils/architecture/createState'
-import { createStateUpdater } from '../utils/architecture/createStateUpdater'
+import { createState, createStateUpdater } from '../architecture'
 
 
 export type NumbersState = number[]
-const name = 'numbers'
-const numbers = createState<NumbersState>(name, [])
-export const { stream: numbersStream, update: updateNumbers } = numbers
 
-export const clearNumbers = createStateUpdater(name, state => [], numbers.cell)
+export const name = 'state.numbers'
+export const initialState: NumbersState = [];
+
+const { cell, subject, stream, update } = createState<NumbersState>(name, initialState)
+
+export const numbers = cell;
+export const numbers$ = stream;
+export const updateNumbers = update;
+export const clearNumbers = createStateUpdater(name, () => initialState, subject)

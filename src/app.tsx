@@ -3,10 +3,10 @@ import './services/styles'
 import * as React from 'react'
 import { render, unmountComponentAtNode } from 'react-dom'
 
-import { Numbers } from './components/Numbers/Numbers'
+import { Numbers } from './components/numbers/numbers'
 
 
-const AppView: React.StatelessComponent<any> = () =>
+const AppView: React.FC = () =>
   <>
     <Numbers />
   </>
